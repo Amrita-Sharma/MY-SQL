@@ -1,0 +1,186 @@
+SELECT * FROM CUST_BASE;
+SELECT * FROM CUST_ACCT;
+SELECT * FROM ACCT_BASE;
+SELECT * FROM PDCT_REF;
+SELECT * FROM AUS_TRAN;
+
+
+1. Let's find all transaction info but for only for the account 101. 
+
+select * from AUS_TRAN
+where ACCT_I = 101
+
+2.  Let's find all card transactions, and all related information on those transactions
+
+SELECT * FROM AUS_TRAN
+WHERE TRAN_TYPE ="card"
+
+3. Find all transactions at the Star Gazing Tour in Coonabarrabran "Star Gazing Tour, Coonabarrabran PTY LTD.
+
+
+select * from AUS_TRAN
+where tran_desc ="Star Gazing Tour, Coonabarrabran PTY LTD"
+
+4. Find all leisure transactions
+
+SELECT *
+FROM TRAN
+WHERE TRAN_BUSN_CATG = 'LEISURE'
+
+5. Find a list of all transfers
+
+select * from AUS_TRAN
+where tran_type ="TRANSFER"
+
+
+Suppose we only want to see transactions from the 1st Jan 2018 onwards
+1: Using "greater than or equal to"
+
+SELECT *
+FROM TRAN
+WHERE TRAN_D >= '2018-01-01'
+
+
+2. Find transactions of over $100 in value
+
+select * from AUS_TRAN
+where tran_a >= 100
+
+3. Find transactions that did not happen in Sydney
+
+select * from AUS_TRAN
+where tran_locn <> "sydney"
+
+4. Find transactions that are credits, or money coming into the account (i.e. negative)
+
+select * from AUS_TRAN
+where tran_a < 0
+
+Suppose that the Strategy and Finance Dept is writing a Economic Research Report for the CEO has approached the data analytics team.
+The CEO needs to see the broader economic context behind the company financial statements he has seen since Jan 2018.
+Specifically, he is concerned about how the Australian economy is recovering since the holiday season
+
+
+1. As the economy mostly shuts down on New Year's Day you decide to remove it
+
+select * from AUS_TRAN
+where tran_d = "2018-01-01"
+
+
+2. Specifically, the Economic Research team are most interested in discretionary spending as these businesses are most vulnerable to economic recessions.
+So as an example find all spending on 'Dining out' during the same period to help understand challenges facing Australian restaurants.
+
+
+SELECT *
+FROM TRAN
+WHERE TRAN_BUSN_CATG = 'DINING OUT'
+
+
+3. They also ask for a specific example of a restaurant and how spending has changed over time during the year.
+Get a list of transactions for all spending at Tony's Pizza (Tonys Pizza, Carlton PTY LTD)
+
+select * from AUS_TRAN
+where tran_desc = "Tonys Pizza, Carlton PTY LTD"
+
+4. Find all direct debit transactions to National Australia Bank
+
+select * from AUS_TRAN
+where tran_type = "Direct Debit" and TRAN_DESC ="National Australia Bank Cards PTY LTD"
+
+5. Find all card transactions on the 4th Aug 2017
+
+select * from AUS_TRAN
+where tran_D = "2017-08-04" and TRAN_TYPE ="Card"
+
+
+6. Find all ATM withdrawals in Perth
+
+SELECT * FROM AUS_TRAN
+WHERE TRAN_LOCN ="Perth" AND TRAN_TYPE= "ATM CASH WITHDRAWAL"
+
+7.  Find all card payments in Sydney over $70
+
+SELECT * FROM AUS_TRAN
+WHERE TRAN_LOCN ="SYDNEY" AND TRAN_TYPE= "CARD" AND TRAN_A > 70
+
+
+8. Find all transactions at Lebanese chicken shops
+
+SELECT * FROM AUS_TRAN
+WHERE TRAN_DESC  ="Fatimas Lebanese Restaurant, Surry Hills PTY LTD	" 
+OR TRAN_DESC= "Good Chicken, St Leonards PTY LTD" 
+
+9. Find all transctions to betting companies bet365 and betEASY
+
+SELECT * FROM AUS_TRAN
+WHERE TRAN_DESC  ="bet365" 
+OR TRAN_DESC= "betEASY" 
+
+
+10. Suppose you are interested in gambling behaviour, especially by those betting a lot.
+Find transactions to either bet365 or betEASY, which are over $100 
+
+SELECT * FROM AUS_TRAN
+WHERE TRAN_A > 100
+AND TRAN_DESC = "bet365"
+OR TRAN_DESC = "betEASY"
+
+
+11. Find all card transactions by accounts 301 and by 501 
+
+SELECT * FROM AUS_TRAN
+WHERE ACCT_I = 301 
+OR ACCT_I = 501
+
+12. Find all transactions on the last 3 days of 2017
+
+SELECT * FROM AUS_TRAN
+WHERE TRAN_D BETWEEN "2017-12-28" AND  "2018-01-01"
+
+
+14. Find card transactions on Leisure businesses in Sydney.
+
+
+SELECT * FROM AUS_TRAN
+WHERE TRAN_TYPE = 'CARD'
+AND TRAN_BUSN_CATG = "LEISURE"
+AND TRAN_LOCN = "SYDNEY"
+
+15. Find all transactions over $150 spent on either leisure or dining out.
+
+SELECT * FROM AUS_TRAN
+WHERE TRAN_A > 150
+AND TRAN_BUSN_CATG = "LEISURE"
+OR  TRAN_BUSN_CATG = "DINING OUT"
+
+16. Find all leisure transactions under $150 and all dining out transactions over $150 in Sydney or Perth
+
+SELECT * FROM AUS_TRAN
+WHERE TRAN_BUSN_CATG = "leisure" AND TRAN_A > 150
+OR TRAN_BUSN_CATG = "DINING OUT" AND TRAN_A > 150	
+AND TRAN_LOCN = "SYDNEY" OR TRAN_LOCN ="PERTH"
+
+17. In one query find customers who meet any of these conditions:
+ who joined the bank over 50 years ago (1970)
+ who are branch users and joined the bank over 30 years ago (1990)
+
+SELECT * FROM CUST_BASE
+WHERE JOIN_DATE < "1970-12-31"
+OR JOIN_DATE < "1990-12-31" AND BRCH_CUST = 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
