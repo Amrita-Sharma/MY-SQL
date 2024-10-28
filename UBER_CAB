@@ -1,0 +1,13 @@
+select * from drivers_csv;
+select * from passangers_csv;
+select * from rides_csv;
+
+
+#Advanced Level-->
+
+1. #Q1: List the drivers who have driven rides in all pickup locations.
+
+SELECT * FROM DRIVER_CSV
+WHERE driver_id NOT IN  (
+SELECT DISTINCT driver_id FROM RIDES_CSV 
+WHERE pickup_location IS NULL)
